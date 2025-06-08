@@ -24,6 +24,7 @@ pipeline {
                 }
                 sshCommand(remote: remote, command: """
                     cd .. && \
+                    ls && \
                     cd ${FILE} && \
                     ls && \
                     lscpu && \
