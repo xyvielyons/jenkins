@@ -14,7 +14,7 @@ pipeline {
     stages {
         stage('remote ssh') {
             steps {
-                echo "Building.."
+                echo "Building.. ${GIT_AUTHOR_NAME}"
                 script {
                     remote.user = env.PI_CREDS_USR
                     remote.password=env.PI_CREDS_PSW
