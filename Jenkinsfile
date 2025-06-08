@@ -8,8 +8,6 @@ pipeline {
             steps {
                 echo "Building.."
                 sh '''
-                cd myapp
-                python3 install -r requirements.txt
                 '''
             }
         }
@@ -19,7 +17,6 @@ pipeline {
                 sh '''
                 cd myapp
                 python3 hello.py
-                python3 hello.py --name=Brad
                 '''
             }
         }
