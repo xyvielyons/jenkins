@@ -22,7 +22,8 @@ pipeline {
                     remote.password=env.PI_CREDS_PSW
                 }
                 sshCommand(remote: remote, command: "ls -lrt")
-                
+                sshCommand(remote: remote, command: "lscpu")
+
                 echo "Building.."
                 sh '''
                 '''
