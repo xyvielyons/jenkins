@@ -8,7 +8,8 @@ pipeline {
     environment {
         PI_CREDS=credentials('c4770b8f-e01f-4ee1-9235-666f7ef58c23')
         DOCKER_HOST = 'tcp://docker:2375'
-        FILE='Jengaplan'
+        IMAGE_NAME = "jengascheme"
+        TAG = "38"
     }
     triggers {
         pollSCM '* * * * *'
@@ -24,13 +25,15 @@ pipeline {
                 }
                 sshCommand(remote: remote, command: """
                     cd .. && \
-                    ls && \
-                    cd ${FILE} && \
-                    ls && \
-                    lscpu && \
-                    exit \
-                    
+                    cd Jengaplan \
+                    docker compose down && \
+                    docker image rm ${IMAGE_NAME}:${TAG} && \
+                    docker load -i ../${IMAGE_NAME}.tar && \
+                    docker-compose up -d && \
+                    rm -f ../${IMAGE_NAME}.tar && \
+                    exit
                 """)
+                
 
                 echo "Building.."
                 sh '''
