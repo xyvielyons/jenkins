@@ -3,21 +3,29 @@ version: '3.8'
 services:
   jenkins-blueocean:
     image: myjenkins
+    user: root
     ports:
       - 8080:8080
       - 50000:50000
     restart: unless-stopped
     volumes:
       - jenkins-data:/var/jenkins_home
-      - jenkins-docker-certs:/certs/client:ro
+      
     environment:
-      - DOCKER_HOST=tcp://docker:2376
-      - DOCKER_TLS_VERIFY=1
-      - DOCKER_CERT_PATH=/certs/client
-
+      - DOCKER_HOST=tcp://docker:2375
+  docker:
+    image: docker:dind
+    privileged: true  # required for Docker-in-Docker
+    volumes:
+      - docker-data:/var/lib/docker
+    ports:
+      - "2375:2375"  # expose Docker daemon TCP without TLS (dev only)
+    environment:
+      - DOCKER_TLS_CERTDIR=  # disable TLS for simplicity (dev only)
 
 volumes:
   jenkins-data:
+  docker-data:
   jenkins-docker-certs: 
 
     
