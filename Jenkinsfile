@@ -25,12 +25,11 @@ pipeline {
                 }
                 sshCommand(remote: remote, command: """
                     cd .. && \
-                    cd Jengaplan \
+                    cd Jengaplan &&\
                     docker compose down && \
                     docker image rm ${IMAGE_NAME}:${TAG} && \
                     docker load -i ../${IMAGE_NAME}.tar && \
                     docker-compose up -d && \
-                    rm -f ../${IMAGE_NAME}.tar && \
                     exit
                 """)
                 
