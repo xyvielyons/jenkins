@@ -18,13 +18,10 @@ pipeline {
         stage('Test') {
             steps {
                 echo "Testing.."
-                script {
-                    emailext(
-                        subject: "testing phase",
-                        body: "testing jenkins",
-                        to: "xyvielyons@gmail.com"
-                    )
-                }
+                mail to: 'xyvielyons@gmail.com',
+                    subject: 'Jenkins Notification',
+                    body: 'Build completed successfully!'
+
                 sh '''
                 cd myapp
                 python3 hello.py
