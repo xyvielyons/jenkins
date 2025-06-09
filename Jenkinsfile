@@ -23,16 +23,16 @@ pipeline {
                     remote.user = env.PI_CREDS_USR
                     remote.password=env.PI_CREDS_PSW
                 }
+               
                 sshCommand(remote: remote, command: """
                     cd .. && \
-                    cd Jengaplan && \
-                    docker compose down && \
-                    docker image rm ${IMAGE_NAME}:${TAG} && \
-                    docker load -i ../${IMAGE_NAME}.tar && \
-                    docker compose up -d && \
-                    exit
+                    ls && \
+                    cd ${IMAGE_NAME} && \
+                    ls && \
+                    lscpu && \
+                    exit \
+                    
                 """)
-                
 
                 echo "Building.."
                 sh '''
@@ -51,6 +51,7 @@ pipeline {
         stage('Deliver') {
             steps {
                 echo 'Deliver....'
+                input message: "Deploy to production?", ok: "Yes, Deploy",submitter: 'admin'
                 sh '''
                 echo "doing delivery stuff.."
                 '''
