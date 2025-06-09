@@ -42,6 +42,13 @@ pipeline {
         stage('Test') {
             steps {
                 echo "Testing.."
+                script {
+                    emailext(
+                        subject: "testing phase",
+                        body: "testing jenkins",
+                        to: "xyvielyons@gmail.com"
+                    )
+                }
                 sh '''
                 cd myapp
                 python3 hello.py
