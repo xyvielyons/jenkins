@@ -8,7 +8,7 @@ pipeline {
     environment {
         PI_CREDS=credentials('c4770b8f-e01f-4ee1-9235-666f7ef58c23')
         DOCKER_HOST = 'tcp://docker:2375'
-        IMAGE_NAME = "jengascheme"
+        IMAGE_NAME = "Jengaplan"
         TAG = "38"
     }
     triggers {
