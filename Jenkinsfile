@@ -15,6 +15,22 @@ pipeline {
         pollSCM '* * * * *'
     }
     stages {
+        stage('Test') {
+            steps {
+                echo "Testing.."
+                script {
+                    emailext(
+                        subject: "testing phase",
+                        body: "testing jenkins",
+                        to: "xyvielyons@gmail.com"
+                    )
+                }
+                sh '''
+                cd myapp
+                python3 hello.py
+                '''
+            }
+        }
         stage('remote ssh') {
             steps {
                 echo env.GIT_AUTHOR_NAME
@@ -39,22 +55,7 @@ pipeline {
                 '''
             }
         }
-        stage('Test') {
-            steps {
-                echo "Testing.."
-                script {
-                    emailext(
-                        subject: "testing phase",
-                        body: "testing jenkins",
-                        to: "xyvielyons@gmail.com"
-                    )
-                }
-                sh '''
-                cd myapp
-                python3 hello.py
-                '''
-            }
-        }
+        
         stage('Deliver') {
             steps {
                 echo 'Deliver....'
